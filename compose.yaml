@@ -1,0 +1,66 @@
+services:
+  postgres:
+    container_name: postgres
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
+  server:
+    build: .
+    container_name: server
+    ports:
+      - '8002:8002'
+    # command: python manage.py runserver 0.0.0.0:8002
+    volumes:
+      - .:/app:rw # for cloud deployment, avoid relative paths
+    depends_on:
+      postgres:
+        condition: service_started
+    environment:
+      - DATABASE_NAME=postgres
+      - DATABASE_USER=postgres
+      - DATABASE_PASSWORD=secret
+      - DATABASE_HOST=postgres
+      - DATABASE_PORT=5432
+      - DJANGO_KEY=django-insecure-x-3++)n1ouk(j9k%r(-h@uk%@*qwol5e0#9wo&we_$+eoa@8=i
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8002/api/v1/check/ || exit 1"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+    #   - trarch
+  prometheus:
+    container_name: prometheus
+    image: bitnami/prometheus:latest
+    ports:
+      - '9090:9090'
+    depends_on:
+      - server
+    volumes:
+      - ./prometheus.yml:/opt/bitnami/prometheus/conf/prometheus.yml
+      - prometheus:/opt/bitnami/prometheus/data
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana
+    restart: unless-stopped
+    environment:
+      - GF_LOG_LEVEL=debug
+    ports:
+      - '3000:3000'
+    volumes:
+      - grafana:/var/lib/grafana
+    depends_on:
+      - prometheus
+
+volumes:
+  postgres:
+  prometheus:
+  grafana:

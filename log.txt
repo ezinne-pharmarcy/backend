@@ -1,0 +1,15 @@
+2024-07-22 23:07:20,392 - INFO - views - instantiating list_owners function
+2024-07-22 23:07:20,393 - INFO - views - validating requesting user
+2024-07-22 23:07:20,394 - INFO - permissions - verifying requesting user's permissions via the get_user function
+2024-07-22 23:07:20,394 - ERROR - permissions - verification failed due to absence of jwt token in request cookie
+2024-07-22 23:07:20,394 - ERROR - views - requesting user could not be validated
+2024-07-22 23:17:15,626 - INFO - views - instantiating list_owners function
+2024-07-22 23:17:15,627 - INFO - views - validating requesting user
+2024-07-22 23:17:15,627 - INFO - permissions - verifying requesting user's permissions via the get_user function
+2024-07-22 23:17:15,627 - ERROR - permissions - verification failed due to absence of jwt token in request cookie
+2024-07-22 23:17:15,627 - ERROR - views - requesting user could not be validated
+2024-07-22 23:22:01,386 - INFO - views - instantiating list_owners function
+2024-07-22 23:22:01,386 - INFO - views - validating requesting user
+2024-07-22 23:22:01,386 - INFO - permissions - verifying requesting user's permissions via the get_user function
+2024-07-22 23:22:01,386 - ERROR - permissions - verification failed due to absence of jwt token in request cookie
+2024-07-22 23:22:01,387 - ERROR - views - requesting user could not be validated
